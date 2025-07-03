@@ -1,0 +1,860 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700;800;900&display=swap");
+
+:root {
+  --purple-dark: #4a148c;
+  --purple-main: #7b1fa2;
+  --purple-light: #9c27b0;
+  --purple-lightest: #e1bee7;
+  --white: #ffffff;
+  --off-white: #f5f5f5;
+  --text-dark: #212121;
+  --text-medium: #424242;
+  --text-light: #757575;
+  --shadow-light: rgba(156, 39, 176, 0.1);
+  --shadow-medium: rgba(156, 39, 176, 0.3);
+  --shadow-dark: rgba(156, 39, 176, 0.5);
+  --gradient-main: linear-gradient(to right, #7b1fa2, #9c27b0);
+  --gradient-hover: linear-gradient(to right, #4a148c, #7b1fa2);
+  --transition-fast: all 0.3s ease;
+  --transition-medium: all 0.4s ease;
+  --transition-slow: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  --radius-small: 8px;
+  --radius-medium: 15px;
+  --radius-large: 30px;
+  --radius-round: 50%;
+}
+
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Poppins", sans-serif;
+  background-color: var(--off-white);
+  color: var(--text-medium);
+  line-height: 1.6;
+}
+
+a {
+  text-decoration: none;
+  color: var(--purple-main);
+  transition: var(--transition-fast);
+}
+
+a:hover {
+  color: var(--purple-dark);
+}
+
+ul {
+  list-style-type: none;
+}
+
+.flexSB {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.flex {
+  display: flex;
+}
+
+.container {
+  max-width: 90%;
+  margin: auto;
+  padding: 0 15px;
+}
+
+button {
+  background: var(--gradient-main);
+  outline: none;
+  border: none;
+  color: var(--white);
+  padding: 12px 30px;
+  font-weight: 500;
+  font-size: 16px;
+  border-radius: var(--radius-large);
+  cursor: pointer;
+  transition: var(--transition-fast);
+  box-shadow: 0 4px 10px var(--shadow-light);
+}
+
+button:hover {
+  background: var(--gradient-hover);
+  transform: translateY(-3px);
+  box-shadow: 0 7px 15px var(--shadow-medium);
+}
+
+.row {
+  width: 50%;
+}
+
+p {
+  line-height: 1.8;
+  color: var(--text-medium);
+  font-size: 16px;
+}
+
+/* MovieBox Updated Styling */
+.MovieBox {
+  width: 100%;
+  height: 300px;
+  position: relative;
+  transition: var(--transition-medium);
+  border-radius: var(--radius-medium);
+  overflow: hidden;
+  box-shadow: 0 10px 20px var(--shadow-light);
+  margin: 15px 0;
+  background-color: var(--white);
+}
+
+.MovieBox:hover {
+  cursor: pointer;
+  transform: translateY(-10px);
+  box-shadow: 0 20px 30px var(--shadow-medium);
+}
+
+.MovieBox .img {
+  position: relative;
+  height: 60%;
+  overflow: hidden;
+}
+
+.MovieBox img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.MovieBox:hover img {
+  transform: scale(1.08);
+}
+
+.MovieBox .text {
+  padding: 20px;
+  color: var(--text-dark);
+  background-color: var(--white);
+  height: 40%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.MovieBox h3 {
+  font-weight: 600;
+  margin-bottom: 10px;
+  color: var(--purple-dark);
+  font-size: 18px;
+  transition: var(--transition-fast);
+}
+
+.MovieBox:hover h3 {
+  color: var(--purple-light);
+}
+
+.MovieBox .movie-info {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 15px;
+  font-size: 14px;
+  color: var(--text-light);
+}
+
+.MovieBox .movie-time {
+  display: flex;
+  align-items: center;
+}
+
+.MovieBox .movie-time i {
+  margin-right: 5px;
+  color: var(--purple-light);
+}
+
+.MovieBox .genre-tags {
+  display: flex;
+  gap: 8px;
+}
+
+.MovieBox .genre-tag {
+  padding: 3px 10px;
+  background-color: rgba(156, 39, 176, 0.1);
+  color: var(--purple-main);
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 500;
+  transition: var(--transition-fast);
+}
+
+.MovieBox .genre-tag:hover {
+  background-color: var(--purple-light);
+  color: var(--white);
+}
+
+.MovieBox .primary-btn {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px;
+  background: var(--gradient-main);
+  color: var(--white);
+  border-radius: var(--radius-medium);
+  font-weight: 600;
+  font-size: 14px;
+  transition: var(--transition-fast);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.MovieBox .primary-btn:hover {
+  background: var(--gradient-hover);
+  transform: translateY(-3px);
+  box-shadow: 0 6px 15px var(--shadow-medium);
+}
+
+.MovieBox .primary-btn i {
+  margin-right: 8px;
+}
+
+.MovieBox .hover-buttons {
+  position: absolute;
+  bottom: 15px;
+  right: 15px;
+  display: flex;
+  gap: 10px;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: var(--transition-medium);
+}
+
+.MovieBox:hover .hover-buttons {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.MovieBox .circle-btn {
+  width: 35px;
+  height: 35px;
+  border-radius: var(--radius-round);
+  background-color: rgba(255, 255, 255, 0.9);
+  color: var(--purple-light);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  transition: var(--transition-fast);
+}
+
+.MovieBox .circle-btn:hover {
+  background-color: var(--purple-light);
+  color: var(--white);
+}
+
+.MovieBox .movie-rating {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  background-color: rgba(156, 39, 176, 0.9);
+  color: var(--white);
+  padding: 5px 10px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  z-index: 2;
+}
+
+.MovieBox .movie-rating i {
+  color: #ffeb3b;
+  margin-right: 5px;
+}
+
+/* Animation for page transitions */
+.animate-on-scroll {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: var(--transition-slow);
+}
+
+.animate-on-scroll.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.section-animated {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: var(--transition-slow);
+}
+
+.section-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Control buttons for sliders */
+.control-btn button {
+  background: rgba(255, 255, 255, 0.9);
+  border: 2px solid var(--purple-lightest);
+  width: 50px;
+  height: 50px;
+  border-radius: var(--radius-round);
+  cursor: pointer;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  transition: var(--transition-fast);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.control-btn button:hover {
+  background: var(--purple-light);
+  border-color: var(--white);
+}
+
+.control-btn .next {
+  position: absolute;
+  top: 50%;
+  right: 2%;
+  transform: translateY(-50%);
+  z-index: 10;
+}
+
+.control-btn .prev {
+  position: absolute;
+  top: 50%;
+  left: 2%;
+  z-index: 10;
+  transform: translateY(-50%);
+}
+
+.control-btn i {
+  color: var(--purple-main);
+  font-size: 18px;
+  transition: var(--transition-fast);
+}
+
+.control-btn button:hover i {
+  color: var(--white);
+}
+
+/* Heading styles */
+.heading h1 {
+  font-weight: 700;
+  margin: 30px 0;
+  color: var(--purple-dark);
+  position: relative;
+  display: inline-block;
+  padding-bottom: 15px;
+  font-size: 36px;
+}
+
+.heading h1::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 80px;
+  height: 4px;
+  background: linear-gradient(to right, var(--purple-main), var(--purple-lightest));
+  border-radius: 2px;
+}
+
+.heading a {
+  color: var(--purple-light);
+  font-weight: 500;
+  transition: var(--transition-fast);
+  display: flex;
+  align-items: center;
+}
+
+.heading a:hover {
+  color: var(--purple-dark);
+}
+
+.heading a i {
+  margin-left: 5px;
+  transition: transform 0.3s ease;
+}
+
+.heading a:hover i {
+  transform: translateX(5px);
+}
+
+/* Loading animations */
+.page-loader {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: var(--white);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+
+.spinner {
+  width: 70px;
+  height: 70px;
+  border: 6px solid rgba(156, 39, 176, 0.3);
+  border-radius: 50%;
+  border-top-color: var(--purple-light);
+  animation: spin 1s ease-in-out infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.page-loader h2 {
+  margin-top: 20px;
+  color: var(--purple-dark);
+  font-size: 32px;
+  font-weight: 700;
+  letter-spacing: 2px;
+}
+
+.page-loader p {
+  color: var(--purple-light);
+  margin-top: 10px;
+}
+
+/* Pulse animation for trending items */
+@keyframes pulse {
+  0% {
+    box-shadow: 0 0 0 0 var(--shadow-medium);
+  }
+  70% {
+    box-shadow: 0 0 0 10px rgba(156, 39, 176, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(156, 39, 176, 0);
+  }
+}
+
+.trending-badge {
+  animation: pulse 2s infinite;
+  background: var(--gradient-main);
+  color: var(--white);
+  padding: 8px 15px;
+  border-radius: 20px;
+  font-size: 14px;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+}
+
+.trending-badge i {
+  margin-right: 8px;
+  color: #ffeb3b;
+}
+
+/* Custom dots for sliders */
+.custom-dots {
+  bottom: -30px;
+}
+
+.custom-dots li {
+  margin: 0 5px;
+}
+
+.custom-dots li button {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background-color: rgba(156, 39, 176, 0.2);
+  padding: 0;
+  box-shadow: none;
+}
+
+.custom-dots li.slick-active button {
+  background-color: var(--purple-light);
+  transform: scale(1.2);
+}
+
+.custom-dots li button:before {
+  display: none;
+}
+
+/* Footer styling */
+.site-footer {
+  background: linear-gradient(to right, var(--purple-dark), var(--purple-main));
+  color: var(--white);
+  padding: 60px 0 20px;
+  margin-top: 60px;
+}
+
+.footer-content {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.footer-brand {
+  flex: 0 0 25%;
+  margin-bottom: 30px;
+}
+
+.footer-brand h3 {
+  font-size: 28px;
+  margin-bottom: 15px;
+  font-weight: 700;
+}
+
+.footer-brand p {
+  color: rgba(255, 255, 255, 0.8);
+  line-height: 1.6;
+}
+
+.footer-links {
+  flex: 0 0 50%;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 30px;
+}
+
+.footer-links-column {
+  flex: 0 0 30%;
+}
+
+.footer-links-column h4 {
+  color: var(--white);
+  font-size: 18px;
+  margin-bottom: 20px;
+  position: relative;
+  padding-bottom: 10px;
+}
+
+.footer-links-column h4::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 40px;
+  height: 3px;
+  background-color: var(--purple-lightest);
+}
+
+.footer-links-column ul li {
+  margin-bottom: 10px;
+}
+
+.footer-links-column ul li a {
+  color: rgba(255, 255, 255, 0.8);
+  transition: var(--transition-fast);
+}
+
+.footer-links-column ul li a:hover {
+  color: var(--white);
+  padding-left: 5px;
+}
+
+.social-links {
+  flex: 0 0 25%;
+  display: flex;
+  justify-content: flex-end;
+  gap: 15px;
+}
+
+.social-links a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.1);
+  color: var(--white);
+  font-size: 18px;
+  transition: var(--transition-fast);
+}
+
+.social-links a:hover {
+  background-color: var(--white);
+  color: var(--purple-main);
+  transform: translateY(-5px);
+}
+
+.copyright {
+  text-align: center;
+  margin-top: 40px;
+  padding-top: 20px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 14px;
+}
+
+/* Navbar/Header Styling */
+.header {
+  background-color: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  padding: 15px 0;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+}
+
+.logo h2 {
+  color: var(--purple-dark);
+  font-weight: 700;
+  font-size: 24px;
+  margin-left: 10px;
+}
+
+.logo span {
+  color: var(--purple-light);
+}
+
+/* Mobile Responsive */
+@media only screen and (max-width: 1024px) {
+  .container {
+    max-width: 95%;
+  }
+  
+  .footer-content {
+    padding: 0 30px;
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  .heading h1 {
+    font-size: 28px;
+  }
+  
+  .row {
+    width: 100%;
+  }
+  
+  .MovieBox {
+    height: 280px;
+  }
+  
+  .footer-brand, .footer-links, .social-links {
+    flex: 0 0 100%;
+  }
+  
+  .footer-links {
+    margin: 20px 0;
+  }
+  
+  .social-links {
+    justify-content: center;
+  }
+  
+  .footer-content {
+    flex-direction: column;
+  }
+}
+
+@media only screen and (max-width: 576px) {
+  .container {
+    padding: 0 10px;
+  }
+  
+  .heading h1 {
+    font-size: 24px;
+  }
+  
+  .heading h1::after {
+    width: 60px;
+  }
+  
+  .MovieBox {
+    height: 250px;
+    margin: 10px 0;
+  }
+  
+  .MovieBox .text {
+    padding: 15px;
+  }
+  
+  .MovieBox h3 {
+    font-size: 16px;
+  }
+  
+  .MovieBox .movie-info {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 5px;
+  }
+  
+  .control-btn button {
+    width: 40px;
+    height: 40px;
+  }
+  
+  .footer-links {
+    flex-direction: column;
+    gap: 30px;
+  }
+}
+
+/* Sayfa arka planını tamamen mor yapmak için, header hariç */
+html, body {
+  background-color: #1a0733 !important; /* Koyu mor arkaplan - !important ile zorla uygula */
+  color: #fff;
+  min-height: 100vh;
+}
+
+/* HTML ve body'nin tüm yüksekliği doldurmasını sağla */
+html {
+  height: 100%;
+}
+
+/* Ana içerik alanı arka planı */
+.main-content, 
+.main-wrapper,
+.app-container,
+#root {
+  background-color: #1a0733 !important;
+  min-height: 100vh;
+}
+
+/* Tüm bölümlerin arka planı */
+.content-section, 
+.animate-on-scroll,
+.upcomr,
+.trending,
+.section-animated {
+  background: linear-gradient(135deg, #2d0854 0%, #4a148c 100%) !important;
+}
+
+/* Slider dot'ları için container */
+.slick-dots {
+  background: transparent !important;
+}
+
+/* Footer */
+.site-footer, 
+.footer-content {
+  background: linear-gradient(to right, #2d0854, #4a148c) !important;
+}
+
+/* Header için stil yok - kendi stilinde kalacak */
+
+/* MovieBox kartları */
+.MovieBox {
+  background-color: #2d0854 !important;
+}
+
+.MovieBox .text {
+  background-color: #2d0854 !important;
+  color: white !important;
+}
+
+/* Kaybolmuş olabilecek diğer elementler */
+.margin, 
+.footer {
+  background-color: #1a0733 !important;
+}
+
+/* Tüm siyah arka planlı elementleri kontrol et (header hariç) */
+body > *:not(.header) [style*="background-color: black"],
+body > *:not(.header) [style*="background-color: #000"],
+body > *:not(.header) [style*="background: black"],
+body > *:not(.header) [style*="background: #000"] {
+  background-color: #1a0733 !important;
+  background: #1a0733 !important;
+}
+
+/* Sayfa dip kısmı */
+html::after {
+  content: "";
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 100vh;
+  background-color: #1a0733;
+  z-index: -9999;
+}
+
+/* Add these styles to your App.css to ensure proper theming */
+
+/* Global background color enforcement */
+body, #root, .App {
+  background-color: #1a0733 !important;
+  color: #fff !important;
+}
+
+/* Ensure privacy and FAQ pages maintain correct styling */
+.faq-content, 
+.privacy-content,
+.privacy-hero,
+.faq-hero {
+  background-color: #1a0733 !important;
+  color: #fff !important;
+}
+
+/* Ensure all text in these sections is visible */
+.privacy-section p,
+.privacy-section li,
+.privacy-section h2,
+.privacy-section h3,
+.faq-category h2,
+.accordion-header h3,
+.accordion-content p,
+.contact-support h2,
+.contact-support p {
+  color: var(--white) !important;
+}
+
+/* Fix accordion animation */
+.accordion-item.active .accordion-content {
+  display: block !important;
+}
+
+/* Fix support options in FAQ */
+.support-option {
+  color: var(--white) !important;
+}
+
+.support-option p {
+  color: rgba(255, 255, 255, 0.7) !important;
+}
+
+/* Fix mobile styling */
+@media only screen and (max-width: 768px) {
+  .privacy-wrapper,
+  .faq-wrapper,
+  .contact-support {
+    width: 90% !important;
+    padding: 20px !important;
+  }
+  
+  .accordion-header {
+    padding: 15px !important;
+  }
+  
+  .accordion-content.show {
+    padding-bottom: 15px !important;
+  }
+}
+
+/* Fix font awesome icons if needed */
+.fas {
+  font-family: "Font Awesome 5 Free" !important;
+  font-weight: 900;
+}
+

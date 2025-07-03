@@ -1,0 +1,678 @@
+/* Categories Page Styles */
+.category-page {
+  min-height: 100vh;
+  background-color: #0d0617;
+  color: #ffffff;
+}
+
+/* Hero Section */
+.category-hero {
+  position: relative;
+  height: 45vh;
+  min-height: 300px;
+  max-height: 500px;
+  background: var(--primary-gradient);
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 40px;
+  overflow: hidden;
+}
+
+.category-hero::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  /* Fixed path: Using a gradient instead of an image */
+  background: linear-gradient(135deg, #5a189a, #7b2cbf, #9d4edd);
+  background-size: 400% 400%;
+  opacity: 0.3;
+  z-index: 1;
+  animation: gradient-shift 30s infinite alternate ease-in-out;
+}
+
+@keyframes gradient-shift {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+@keyframes slow-pan {
+  0% {
+    transform: scale(1.05) translate(0, 0);
+  }
+  100% {
+    transform: scale(1.15) translate(-2%, -2%);
+  }
+}
+
+.category-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    180deg,
+    rgba(13, 6, 23, 0.7) 0%,
+    rgba(13, 6, 23, 0.9) 100%
+  );
+  z-index: 2;
+}
+
+.category-info {
+  position: relative;
+  z-index: 3;
+  text-align: center;
+  padding: 0 20px;
+  max-width: 800px;
+}
+
+.category-icon {
+  font-size: 3rem;
+  margin-bottom: 20px;
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  background: rgba(157, 78, 221, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 20px;
+  box-shadow: 0 0 30px rgba(157, 78, 221, 0.5);
+  color: #9d4edd;
+}
+
+.category-icon i {
+  text-shadow: 0 0 10px rgba(157, 78, 221, 0.8);
+}
+
+.category-info h1 {
+  font-size: 2.8rem;
+  font-weight: 700;
+  margin-bottom: 15px;
+  background: linear-gradient(to right, #ffffff, #9d4edd);
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  animation: shine 3s infinite;
+}
+
+@keyframes shine {
+  0% {
+    background-position: -200px;
+  }
+  100% {
+    background-position: 200px;
+  }
+}
+
+.category-info p {
+  font-size: 1.2rem;
+  opacity: 0.8;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+/* Container */
+.container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+/* Loading State */
+.loading-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 60px 0;
+  text-align: center;
+}
+
+.loading-spinner {
+  width: 50px;
+  height: 50px;
+  border: 4px solid rgba(157, 78, 221, 0.2);
+  border-top: 4px solid #9d4edd;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin-bottom: 20px;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.loading-container p {
+  font-size: 1.2rem;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+/* Results Header */
+.results-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+  padding-bottom: 15px;
+  border-bottom: 1px solid rgba(157, 78, 221, 0.3);
+}
+
+.results-header h2 {
+  font-size: 1.6rem;
+  font-weight: 600;
+}
+
+.results-header h2 span {
+  color: #9d4edd;
+  font-weight: 700;
+}
+
+.filter-options select {
+  background-color: rgba(157, 78, 221, 0.1);
+  border: 1px solid rgba(157, 78, 221, 0.3);
+  color: #ffffff;
+  padding: 8px 15px;
+  border-radius: 20px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  outline: none;
+  transition: all 0.3s ease;
+}
+
+.filter-options select:hover {
+  background-color: rgba(157, 78, 221, 0.2);
+  border-color: rgba(157, 78, 221, 0.5);
+}
+
+.filter-options select:focus {
+  box-shadow: 0 0 0 2px rgba(157, 78, 221, 0.3);
+}
+
+/* Movie Grid */
+.movie-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 25px;
+  margin-bottom: 60px;
+}
+
+.movie-card {
+  transition: all 0.3s ease;
+  border-radius: 10px;
+  background: rgba(30, 15, 50, 0.6);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+.movie-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3), 0 0 0 1px rgba(157, 78, 221, 0.3);
+}
+
+.movie-card a {
+  text-decoration: none;
+  color: inherit;
+}
+
+.movie-poster {
+  position: relative;
+  height: 340px;
+  overflow: hidden;
+  width: 100%;
+}
+
+.movie-poster img {
+  width: 100%;
+  transition: all 0.5s ease;
+}
+
+.movie-card:hover .movie-poster img {
+  transform: scale(1.08);
+  filter: brightness(0.7);
+}
+
+.movie-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(to top, rgba(10, 4, 20, 0.8) 0%, transparent 60%);
+  opacity: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+}
+
+.movie-card:hover .movie-overlay {
+  opacity: 1;
+}
+
+.movie-actions {
+  display: flex;
+  gap: 15px;
+}
+
+.movie-actions button {
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  transform: translateY(20px);
+  opacity: 0;
+}
+
+.movie-card:hover .movie-actions button {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+.play-btn {
+  background: #9d4edd;
+  color: white;
+}
+
+.play-btn:hover {
+  background: #7b2cbf;
+  transform: scale(1.1) !important;
+}
+
+.add-btn {
+  background: rgba(255, 255, 255, 0.2);
+  color: white;
+  backdrop-filter: blur(5px);
+}
+
+.add-btn:hover {
+  background: rgba(255, 255, 255, 0.3);
+  transform: scale(1.1) !important;
+}
+
+.movie-actions .play-btn {
+  transition-delay: 0.1s;
+}
+
+.movie-actions .add-btn {
+  transition-delay: 0.2s;
+}
+
+.movie-info {
+  padding: 15px;
+}
+
+.movie-info h3 {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 8px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.movie-meta {
+  display: flex;
+  align-items: center;
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.rating {
+  display: flex;
+  align-items: center;
+  margin-right: 12px;
+  color: #ffba08;
+}
+
+.rating i {
+  margin-right: 5px;
+  font-size: 0.8rem;
+}
+
+/* Empty Category */
+.empty-category {
+  text-align: center;
+  padding: 60px 0;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.empty-icon {
+  font-size: 4rem;
+  color: rgba(157, 78, 221, 0.4);
+  margin-bottom: 20px;
+}
+
+.empty-category h2 {
+  font-size: 1.8rem;
+  margin-bottom: 15px;
+}
+
+.empty-category p {
+  color: rgba(255, 255, 255, 0.7);
+  margin-bottom: 25px;
+}
+
+.browse-btn {
+  display: inline-block;
+  background: linear-gradient(to right, #7b2cbf, #9d4edd);
+  color: white;
+  padding: 12px 25px;
+  border-radius: 25px;
+  text-decoration: none;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  box-shadow: 0 5px 15px rgba(123, 44, 191, 0.3);
+}
+
+.browse-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 20px rgba(123, 44, 191, 0.4);
+}
+
+/* Recommendations Section */
+.category-recommendations {
+  margin: 60px 0;
+  padding-top: 40px;
+  border-top: 1px solid rgba(157, 78, 221, 0.2);
+}
+
+.category-recommendations h2 {
+  font-size: 1.8rem;
+  margin-bottom: 25px;
+  position: relative;
+  padding-left: 15px;
+}
+
+.category-recommendations h2::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 4px;
+  background: linear-gradient(to bottom, #7b2cbf, #9d4edd);
+  border-radius: 2px;
+}
+
+.recommendations-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 20px;
+}
+
+.recommendation-card {
+  transition: all 0.3s ease;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.recommendation-card:hover {
+  transform: translateY(-5px);
+}
+
+.recommendation-poster {
+  position: relative;
+  height: 280px;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.recommendation-poster img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: all 0.3s ease;
+}
+
+.recommendation-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(to top, rgba(10, 4, 20, 0.7) 0%, transparent 70%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: all 0.3s ease;
+}
+
+.recommendation-card:hover .recommendation-overlay {
+  opacity: 1;
+}
+
+.recommendation-card:hover .recommendation-poster img {
+  transform: scale(1.08);
+}
+
+.play-icon {
+  width: 40px;
+  height: 40px;
+  background: rgba(157, 78, 221, 0.8);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  transform: translateY(20px);
+  transition: all 0.3s ease;
+}
+
+.recommendation-card:hover .play-icon {
+  transform: translateY(0);
+}
+
+.recommendation-info {
+  padding: 12px 5px;
+}
+
+.recommendation-info h4 {
+  font-size: 1rem;
+  font-weight: 500;
+  margin-bottom: 5px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.recommendation-info .time {
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+/* Responsive Styles */
+@media (max-width: 1024px) {
+  .movie-grid {
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  }
+
+  .movie-poster {
+    height: 280px;
+  }
+}
+
+@media (max-width: 768px) {
+  .category-hero {
+    height: 40vh;
+  }
+
+  .category-info h1 {
+    font-size: 2.2rem;
+  }
+
+  .results-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 15px;
+  }
+
+  .movie-grid {
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 15px;
+  }
+
+  .movie-poster {
+    height: 220px;
+  }
+
+  .recommendations-grid {
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  }
+
+  .recommendation-poster {
+    height: 200px;
+  }
+}
+
+@media (max-width: 480px) {
+  .category-hero {
+    height: 35vh;
+  }
+
+  .category-icon {
+    width: 80px;
+    height: 80px;
+    font-size: 2.2rem;
+  }
+
+  .category-info h1 {
+    font-size: 1.8rem;
+  }
+
+  .category-info p {
+    font-size: 1rem;
+  }
+
+  .movie-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+  }
+
+  .movie-poster {
+    height: 200px;
+  }
+
+  .movie-info h3 {
+    font-size: 0.95rem;
+  }
+
+  .recommendations-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* Add these styles to your Categories.css file */
+
+/* Styling for missing movie posters */
+.no-poster {
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    135deg,
+    rgba(90, 24, 154, 0.7),
+    rgba(157, 78, 221, 0.5)
+  );
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.no-poster i {
+  font-size: 3rem;
+  color: rgba(255, 255, 255, 0.8);
+  opacity: 0.7;
+  transition: all 0.3s ease;
+}
+
+.movie-card:hover .no-poster i {
+  transform: scale(1.1);
+  color: white;
+  opacity: 1;
+}
+
+
+/* Add to List Button for Categories */
+.btn-add-to-list {
+  position: absolute;
+  bottom: 15px;
+  right: 15px;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.8);
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  color: rgba(255, 255, 255, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  z-index: 3;
+  opacity: 0;
+  transform: scale(0.8);
+}
+
+.movie-card:hover .btn-add-to-list {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.btn-add-to-list:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.4);
+  color: white;
+  transform: scale(1.1);
+}
+
+.btn-add-to-list.added {
+  background: linear-gradient(135deg, #22c55e, #16a34a);
+  border-color: #22c55e;
+  color: white;
+  opacity: 1;
+  transform: scale(1);
+}
+
+.btn-add-to-list.added:hover {
+  background: linear-gradient(135deg, #4ade80, #22c55e);
+  transform: scale(1.1);
+}
+
+.btn-add-to-list:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.btn-add-to-list i {
+  font-size: 14px;
+  transition: all 0.3s ease;
+}
+
+.btn-add-to-list.added i {
+  color: white;
+  text-shadow: 0 0 10px rgba(34, 197, 94, 0.5);
+}

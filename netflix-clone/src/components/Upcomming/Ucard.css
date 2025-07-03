@@ -1,0 +1,619 @@
+/* ========== UCARD COMPONENT STYLES ========== */
+
+.ucard {
+  width: 100%;
+  height: 420px;
+  position: relative;
+  perspective: 1000px;
+  transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.ucard__container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border-radius: 20px;
+  overflow: hidden;
+  background: linear-gradient(145deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+  box-shadow: 
+    0 8px 32px rgba(0, 0, 0, 0.3),
+    0 2px 8px rgba(0, 0, 0, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  transition: all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  transform-style: preserve-3d;
+}
+
+/* Hover Effects */
+.ucard:hover .ucard__container {
+  transform: translateY(-12px) rotateX(5deg);
+  box-shadow: 
+    0 25px 50px rgba(0, 0, 0, 0.4),
+    0 8px 32px rgba(138, 43, 226, 0.2),
+    0 0 0 1px rgba(255, 255, 255, 0.1);
+}
+
+.ucard:hover .ucard__glow-effect {
+  opacity: 1;
+  transform: scale(1.05);
+}
+
+/* ========== IMAGE CONTAINER ========== */
+.ucard__image-container {
+  position: relative;
+  width: 100%;
+  height: 70%;
+  overflow: hidden;
+  border-radius: 20px 20px 0 0;
+}
+
+.ucard__image-wrapper {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  transition: all 0.6s ease;
+}
+
+.ucard__image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  filter: brightness(0.9) contrast(1.1);
+}
+
+.ucard:hover .ucard__image {
+  transform: scale(1.1);
+  filter: brightness(1.1) contrast(1.2);
+}
+
+/* Image Loading States */
+.ucard__image-skeleton {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(145deg, #2a2a3e, #1a1a2e);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.ucard__skeleton-shimmer {
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.1) 50%,
+    transparent 100%
+  );
+  animation: shimmer 2s infinite;
+}
+
+@keyframes shimmer {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+.ucard__image-wrapper.loaded .ucard__image-skeleton {
+  opacity: 0;
+  visibility: hidden;
+}
+
+/* ========== BADGES ========== */
+.ucard__quality-badge {
+  position: absolute;
+  top: 16px;
+  left: 16px;
+  background: linear-gradient(135deg, #ff6b6b, #ee5a24);
+  color: white;
+  padding: 6px 12px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  z-index: 5;
+  transform: translateY(-40px);
+  opacity: 0;
+  transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+  box-shadow: 0 4px 15px rgba(255, 107, 107, 0.3);
+}
+
+.ucard:hover .ucard__quality-badge {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+.ucard__rating-badge {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  background: linear-gradient(135deg, #ffd700, #ff8c00);
+  color: #1a1a2e;
+  padding: 8px 12px;
+  border-radius: 15px;
+  font-size: 13px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  z-index: 5;
+  transform: translateY(-5px);
+  transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+  box-shadow: 0 4px 20px rgba(255, 215, 0, 0.3);
+}
+
+.ucard:hover .ucard__rating-badge {
+  transform: translateY(-8px) scale(1.05);
+  box-shadow: 0 6px 25px rgba(255, 215, 0, 0.4);
+}
+
+.ucard__star-icon {
+  width: 14px;
+  height: 14px;
+  color: #1a1a2e;
+}
+
+/* ========== ACTION BUTTONS ========== */
+.ucard__action-buttons {
+  position: absolute;
+  top: 16px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 8px;
+  z-index: 5;
+  opacity: 0;
+  transform: translateX(-50%) translateY(-20px);
+  transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.ucard:hover .ucard__action-buttons {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
+.ucard__action-btn {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.ucard__action-btn:hover {
+  background: linear-gradient(135deg, #8a2be2, #9370db);
+  transform: scale(1.1);
+  box-shadow: 0 8px 25px rgba(138, 43, 226, 0.4);
+}
+
+.ucard__action-btn svg {
+  width: 18px;
+  height: 18px;
+  transition: all 0.3s ease;
+}
+
+.ucard__action-btn:hover svg {
+  transform: scale(1.1);
+}
+
+/* ========== PLAY OVERLAY ========== */
+.ucard__play-overlay {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0.8);
+  z-index: 4;
+  opacity: 0;
+  transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.ucard:hover .ucard__play-overlay {
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(1);
+}
+
+.ucard__play-button {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #8a2be2, #9370db);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.4s ease;
+  box-shadow: 
+    0 0 30px rgba(138, 43, 226, 0.6),
+    0 0 60px rgba(138, 43, 226, 0.3);
+  position: relative;
+  overflow: hidden;
+}
+
+.ucard__play-button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+  transform: translateX(-100%);
+  transition: transform 0.6s ease;
+}
+
+.ucard:hover .ucard__play-button::before {
+  transform: translateX(100%);
+}
+
+.ucard__play-icon {
+  width: 24px;
+  height: 24px;
+  color: white;
+  margin-left: 4px; /* Offset for visual centering */
+}
+
+/* ========== GRADIENT OVERLAY ========== */
+.ucard__gradient-overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 60%;
+  background: linear-gradient(
+    to top,
+    rgba(26, 26, 46, 0.95) 0%,
+    rgba(26, 26, 46, 0.8) 30%,
+    rgba(26, 26, 46, 0.4) 60%,
+    transparent 100%
+  );
+  z-index: 2;
+  transition: all 0.4s ease;
+}
+
+.ucard:hover .ucard__gradient-overlay {
+  background: linear-gradient(
+    to top,
+    rgba(26, 26, 46, 0.98) 0%,
+    rgba(26, 26, 46, 0.9) 30%,
+    rgba(26, 26, 46, 0.5) 60%,
+    transparent 100%
+  );
+}
+
+/* ========== CONTENT AREA ========== */
+.ucard__content {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 30%;
+  padding: 20px;
+  z-index: 3;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.ucard__header {
+  margin-bottom: 12px;
+}
+
+.ucard__title {
+  font-size: 18px;
+  font-weight: 700;
+  color: white;
+  margin: 0 0 8px 0;
+  line-height: 1.3;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+  transition: all 0.3s ease;
+}
+
+.ucard:hover .ucard__title {
+  color: #c8a2c8;
+  transform: translateY(-2px);
+}
+
+/* ========== META INFORMATION ========== */
+.ucard__meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.ucard__duration {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.ucard__clock-icon {
+  width: 14px;
+  height: 14px;
+  color: #8a2be2;
+}
+
+.ucard__genres {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.ucard__genre-tag {
+  padding: 4px 10px;
+  background: linear-gradient(135deg, rgba(138, 43, 226, 0.3), rgba(147, 112, 219, 0.3));
+  border: 1px solid rgba(138, 43, 226, 0.4);
+  color: rgba(255, 255, 255, 0.9);
+  border-radius: 12px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(5px);
+}
+
+.ucard:hover .ucard__genre-tag {
+  background: linear-gradient(135deg, rgba(138, 43, 226, 0.5), rgba(147, 112, 219, 0.5));
+  border-color: rgba(138, 43, 226, 0.6);
+  transform: translateY(-1px);
+}
+
+.ucard__genre-more {
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 11px;
+  font-weight: 500;
+}
+
+/* ========== WATCH BUTTON ========== */
+.ucard__watch-link {
+  text-decoration: none;
+  width: 100%;
+}
+
+.ucard__watch-btn {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px 16px;
+  background: linear-gradient(135deg, #8a2be2, #9370db);
+  color: white;
+  border: none;
+  border-radius: 16px;
+  font-weight: 700;
+  font-size: 14px;
+  letter-spacing: 0.5px;
+  cursor: pointer;
+  transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(138, 43, 226, 0.3);
+  text-transform: uppercase;
+}
+
+.ucard__watch-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 30px rgba(138, 43, 226, 0.5);
+  background: linear-gradient(135deg, #9370db, #8a2be2);
+}
+
+.ucard__watch-icon {
+  width: 16px;
+  height: 16px;
+  transition: all 0.3s ease;
+}
+
+.ucard__watch-btn:hover .ucard__watch-icon {
+  transform: scale(1.1);
+}
+
+/* Button Shimmer Effect */
+.ucard__btn-shimmer {
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.3) 50%,
+    transparent 100%
+  );
+  transition: left 0.6s ease;
+}
+
+.ucard__watch-btn:hover .ucard__btn-shimmer {
+  left: 100%;
+}
+
+/* ========== GLOW EFFECT ========== */
+.ucard__glow-effect {
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
+  background: linear-gradient(135deg, #8a2be2, #9370db, #8a2be2);
+  border-radius: 22px;
+  z-index: -1;
+  opacity: 0;
+  transition: all 0.6s ease;
+  transform: scale(0.95);
+  filter: blur(8px);
+}
+
+/* ========== RESPONSIVE DESIGN ========== */
+@media (max-width: 1200px) {
+  .ucard {
+    height: 380px;
+  }
+  
+  .ucard__title {
+    font-size: 17px;
+  }
+}
+
+@media (max-width: 768px) {
+  .ucard {
+    height: 350px;
+  }
+  
+  .ucard__content {
+    padding: 16px;
+  }
+  
+  .ucard__title {
+    font-size: 16px;
+    -webkit-line-clamp: 1;
+  }
+  
+  .ucard__meta {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+  
+  .ucard__play-button {
+    width: 60px;
+    height: 60px;
+  }
+  
+  .ucard__play-icon {
+    width: 20px;
+    height: 20px;
+  }
+  
+  .ucard__action-buttons {
+    gap: 6px;
+  }
+  
+  .ucard__action-btn {
+    width: 36px;
+    height: 36px;
+  }
+  
+  .ucard__action-btn svg {
+    width: 16px;
+    height: 16px;
+  }
+}
+
+@media (max-width: 576px) {
+  .ucard {
+    height: 320px;
+  }
+  
+  .ucard__content {
+    padding: 12px;
+    height: 35%;
+  }
+  
+  .ucard__title {
+    font-size: 15px;
+    margin-bottom: 6px;
+  }
+  
+  .ucard__watch-btn {
+    padding: 10px 12px;
+    font-size: 13px;
+  }
+  
+  .ucard__rating-badge {
+    padding: 6px 10px;
+    font-size: 12px;
+  }
+  
+  .ucard__quality-badge {
+    padding: 4px 8px;
+    font-size: 11px;
+  }
+  
+  /* Simplify hover effects on mobile */
+  .ucard:hover .ucard__container {
+    transform: translateY(-8px);
+  }
+  
+  .ucard__action-buttons {
+    position: static;
+    opacity: 1;
+    transform: none;
+    justify-content: center;
+    margin-bottom: 8px;
+  }
+}
+
+/* ========== ACCESSIBILITY ========== */
+@media (prefers-reduced-motion: reduce) {
+  .ucard,
+  .ucard__container,
+  .ucard__image,
+  .ucard__watch-btn,
+  .ucard__action-btn,
+  .ucard__play-overlay {
+    transition: none;
+    animation: none;
+  }
+  
+  .ucard:hover .ucard__container {
+    transform: none;
+  }
+  
+  .ucard:hover .ucard__image {
+    transform: none;
+  }
+}
+
+/* ========== DARK MODE SUPPORT ========== */
+@media (prefers-color-scheme: dark) {
+  .ucard__container {
+    background: linear-gradient(145deg, #0a0a0a 0%, #1a1a1a 50%, #2a2a2a 100%);
+  }
+  
+  .ucard__gradient-overlay {
+    background: linear-gradient(
+      to top,
+      rgba(10, 10, 10, 0.95) 0%,
+      rgba(10, 10, 10, 0.8) 30%,
+      rgba(10, 10, 10, 0.4) 60%,
+      transparent 100%
+    );
+  }
+}
+
+/* ========== HIGH CONTRAST MODE ========== */
+@media (prefers-contrast: high) {
+  .ucard__container {
+    border: 2px solid white;
+  }
+  
+  .ucard__watch-btn {
+    border: 2px solid white;
+  }
+  
+  .ucard__action-btn {
+    border: 2px solid white;
+  }
+}
