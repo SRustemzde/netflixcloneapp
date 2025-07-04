@@ -1,6 +1,6 @@
 // src/services/api.js
 
-const PRIMARY_API_URL = `https://backend-fast-nmat.onrender.com/api/v1`;
+const PRIMARY_API_URL = `https://backend-fast-s1z9.onrender.com/api/v1`;
 const FALLBACK_API_URL = `http://localhost:8000/api/v1`;
 let API_BASE_URL = PRIMARY_API_URL;
 
