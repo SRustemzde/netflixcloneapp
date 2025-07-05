@@ -1,7 +1,7 @@
 // src/components/login/Login.jsx
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom"; // useNavigate import edildi
-import apiService from "../../services/api"; // Oluşturduğumuz apiService'i import et
+import { useAuth } from "../../contexts/AuthContext"; // AuthContext import et
 import "./Login.css";
 
 export default function Login() {
@@ -14,6 +14,14 @@ export default function Login() {
   const [loading, setLoading] = useState(false); // Yükleme durumu için state
 
   const navigate = useNavigate(); // Yönlendirme için
+  const { login, register, isAuthenticated } = useAuth(); // AuthContext'ten gerekli fonksiyonları al
+
+  // Eğer kullanıcı zaten giriş yapmışsa ana sayfaya yönlendir
+  useEffect(() => {
+    if (isAuthenticated) {
+      navigate("/");
+    }
+  }, [isAuthenticated, navigate]);
 
   const toggleAuthMode = () => {
     setIsLoginMode(!isLoginMode);
@@ -68,84 +76,40 @@ export default function Login() {
     try {
       if (isLoginMode) {
         // Giriş yapma isteği
-        const response = await apiService.login({ email, password });
+        const response = await login({ email, password });
         console.log("Login successful:", response);
-        if (response.data && response.data.token) {
-          localStorage.setItem("authToken", response.data.token); // Token'ı localStorage'a kaydet
-          // İsteğe bağlı: Kullanıcı bilgilerini almak için ek bir istek yapabilirsiniz
-          // const userData = await apiService.getCurrentUser();
-          // console.log("Current user data:", userData);
-          // Kullanıcıyı ana sayfaya veya dashboard'a yönlendir
+        if (response.success) {
+          // AuthContext giriş başarılı olduğunda otomatik olarak navigate edecek
           navigate("/"); // Ana sayfaya yönlendir
+        } else {
+          setError(response.error || "Giriş yapılamadı.");
         }
       } else {
-        // Kayıt olma isteği - Node.js backend için doğru format
+        // Kayıt olma isteği
         const registrationData = { 
           username, 
           email, 
           password, 
-          firstName: name.split(' ')[0] || name,
-          lastName: name.split(' ').slice(1).join(' ') || ""
+          name: name
         };
         console.log("Sending registration data:", registrationData);
-        const response = await apiService.register(registrationData);
+        const response = await register(registrationData);
         console.log("Registration successful:", response);
-        // Başarılı kayıttan sonra kullanıcıyı bilgilendir ve login'e yönlendir veya otomatik login yap
-        alert("Kayıt başarılı! Lütfen giriş yapın.");
-        setIsLoginMode(true); // Login moduna geç
+        if (response.success) {
+          // Başarılı kayıttan sonra kullanıcıyı bilgilendir ve otomatik login yap
+          alert("Kayıt başarılı! Otomatik giriş yapılıyor...");
+          navigate("/"); // Ana sayfaya yönlendir
+        } else {
+          setError(response.error || "Kayıt sırasında bir hata oluştu.");
+        }
       }
     } catch (err) {
       console.error("Authentication error:", err);
-      console.error("Error details:", {
-        status: err.status,
-        data: err.data,
-        message: err.message
-      });
-      
-      // Daha detaylı hata mesajları
-      if (err.status === 400) {
-        if (err.data && err.data.detail) {
-          if (Array.isArray(err.data.detail)) {
-            // FastAPI validation errors
-            const errorMessages = err.data.detail.map(error => 
-              `${error.loc ? error.loc.join('.') : 'Field'}: ${error.msg}`
-            ).join(', ');
-            setError(`Validation Error: ${errorMessages}`);
-          } else {
-            setError(`Error: ${err.data.detail}`);
-          }
-        } else {
-          setError(
-            isLoginMode
-              ? "Giriş bilgileri hatalı. Lütfen email ve şifrenizi kontrol edin."
-              : "Kayıt bilgileri hatalı. Lütfen tüm alanları doğru şekilde doldurun."
-          );
-        }
-      } else if (err.status === 422) {
-        // Unprocessable Entity - validation error
-        if (err.data && err.data.detail) {
-          if (Array.isArray(err.data.detail)) {
-            const errorMessages = err.data.detail.map(error => 
-              `${error.loc ? error.loc.join('.') : 'Field'}: ${error.msg}`
-            ).join(', ');
-            setError(`Validation Error: ${errorMessages}`);
-          } else {
-            setError(`Validation Error: ${err.data.detail}`);
-          }
-        } else {
-          setError("Form verileri geçersiz. Lütfen kontrol edin.");
-        }
-      } else if (err.data && err.data.detail) {
-        setError(err.data.detail);
-      } else if (err.message) {
-        setError(err.message);
-      } else {
-        setError(
-          isLoginMode
-            ? "Giriş yapılamadı. Lütfen bilgilerinizi kontrol edin."
-            : "Kayıt sırasında bir hata oluştu."
-        );
-      }
+      setError(
+        isLoginMode
+          ? "Giriş yapılamadı. Lütfen bilgilerinizi kontrol edin."
+          : "Kayıt sırasında bir hata oluştu."
+      );
     } finally {
       setLoading(false);
     }

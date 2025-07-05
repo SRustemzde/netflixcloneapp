@@ -1,7 +1,5 @@
 // API Configuration
-const PRIMARY_API_URL = 'http://localhost:8000/api/v1';
-const FALLBACK_API_URL = 'https://backend-fast-s1z9.onrender.com/api/v1';
-let API_BASE_URL = process.env.REACT_APP_API_URL || PRIMARY_API_URL;
+const API_BASE_URL = process.env.REACT_APP_API_URL || 'https://backend-fast-s1z9.onrender.com/api/v1';
 
 // API endpoints
 export const API_ENDPOINTS = {
@@ -41,7 +39,7 @@ export const API_ENDPOINTS = {
   }
 };
 
-// Function to make API request with fallback
+// Function to make API request
 const makeRequest = async (endpoint, options) => {
   try {
     const response = await fetch(`${API_BASE_URL}${endpoint}`, options);
@@ -52,25 +50,7 @@ const makeRequest = async (endpoint, options) => {
     
     return await response.json();
   } catch (error) {
-    // If primary API fails, try fallback
-    if (API_BASE_URL === PRIMARY_API_URL) {
-      console.warn(`Primary API failed, trying fallback: ${error.message}`);
-      API_BASE_URL = FALLBACK_API_URL;
-      
-      try {
-        const fallbackResponse = await fetch(`${API_BASE_URL}${endpoint}`, options);
-        
-        if (!fallbackResponse.ok) {
-          throw new Error(`HTTP error! status: ${fallbackResponse.status}`);
-        }
-        
-        return await fallbackResponse.json();
-      } catch (fallbackError) {
-        console.error('Fallback API also failed:', fallbackError);
-        API_BASE_URL = PRIMARY_API_URL; // Reset for next request
-        throw fallbackError;
-      }
-    }
+    console.error('API request failed:', error);
     throw error;
   }
 };
@@ -150,18 +130,11 @@ export const httpClient = {
 
 // Helper function to get authentication headers
 const getAuthHeaders = () => {
-  const user = localStorage.getItem('user');
-  if (user) {
-    try {
-      const userData = JSON.parse(user);
-      if (userData.token) {
-        return {
-          'Authorization': `Bearer ${userData.token}`
-        };
-      }
-    } catch (error) {
-      console.error('Error parsing user data for auth headers:', error);
-    }
+  const token = localStorage.getItem('authToken');
+  if (token) {
+    return {
+      'Authorization': `Bearer ${token}`
+    };
   }
   return {};
 };

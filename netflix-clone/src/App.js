@@ -17,6 +17,8 @@ import FAQ from "./components/faq/FAQ";
 import Categories from "./components/categories/Categories";
 import CategoryList from "./components/categories/CategoryList";
 import Login from "./components/login/Login";
+import { AuthProvider } from "./contexts/AuthContext";
+import ProtectedRoute from "./components/auth/ProtectedRoute";
 
 // Layout bileşeni - header ve footer içeren normal layout
 const MainLayout = ({ children }) => {
@@ -31,134 +33,166 @@ const MainLayout = ({ children }) => {
 
 function App() {
   return (
-    <Router>
-      <Routes>
-        {/* Login sayfası için özel route - header ve footer olmadan */}
-        <Route path="/login" element={<Login />} />
+    <AuthProvider>
+      <Router>
+        <Routes>
+          {/* Login sayfası için özel route - header ve footer olmadan */}
+          <Route path="/login" element={<Login />} />
 
-        {/* Header ve Footer içeren diğer tüm sayfalar */}
-        <Route
-          path="/"
-          element={
-            <MainLayout>
-              <HomePages />
-            </MainLayout>
-          }
-        />
-        <Route
-          path="/singlePage/:source/:id"
-          element={
-            <MainLayout>
-              <SinglePage />
-            </MainLayout>
-          }
-        />
-        <Route
-          path="/singlePage/content/:id"
-          element={
-            <MainLayout>
-              <SinglePage />
-            </MainLayout>
-          }
-        />
-        <Route
-          path="/movies"
-          element={
-            <MainLayout>
-              <Movies />
-            </MainLayout>
-          }
-        />
-        <Route
-          path="/series"
-          element={
-            <MainLayout>
-              <Series />
-            </MainLayout>
-          }
-        />
-        <Route
-          path="/mylist"
-          element={
-            <MainLayout>
-              <MyList />
-            </MainLayout>
-          }
-        />
-        <Route
-          path="/pricing"
-          element={
-            <MainLayout>
-              <Pricing />
-            </MainLayout>
-          }
-        />
-        <Route
-          path="/profile"
-          element={
-            <MainLayout>
-              <Profile />
-            </MainLayout>
-          }
-        />
-        <Route
-          path="/account"
-          element={
-            <MainLayout>
-              <Account />
-            </MainLayout>
-          }
-        />
-        <Route
-          path="/contact"
-          element={
-            <MainLayout>
-              <Contact />
-            </MainLayout>
-          }
-        />
-        <Route
-          path="/notifications"
-          element={
-            <MainLayout>
-              <Notifications />
-            </MainLayout>
-          }
-        />
-        <Route
-          path="/privacy"
-          element={
-            <MainLayout>
-              <Privacy />
-            </MainLayout>
-          }
-        />
-        <Route
-          path="/faq"
-          element={
-            <MainLayout>
-              <FAQ />
-            </MainLayout>
-          }
-        />
-        <Route
-          path="/category"
-          element={
-            <MainLayout>
-              <CategoryList />
-            </MainLayout>
-          }
-        />
-        <Route
-          path="/category/:categoryName"
-          element={
-            <MainLayout>
-              <Categories />
-            </MainLayout>
-          }
-        />
-      </Routes>
-    </Router>
+          {/* Header ve Footer içeren diğer tüm sayfalar - Authentication gerektiren */}
+          <Route
+            path="/"
+            element={
+              <ProtectedRoute>
+                <MainLayout>
+                  <HomePages />
+                </MainLayout>
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/singlePage/:source/:id"
+            element={
+              <ProtectedRoute>
+                <MainLayout>
+                  <SinglePage />
+                </MainLayout>
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/singlePage/content/:id"
+            element={
+              <ProtectedRoute>
+                <MainLayout>
+                  <SinglePage />
+                </MainLayout>
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/movies"
+            element={
+              <ProtectedRoute>
+                <MainLayout>
+                  <Movies />
+                </MainLayout>
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/series"
+            element={
+              <ProtectedRoute>
+                <MainLayout>
+                  <Series />
+                </MainLayout>
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/mylist"
+            element={
+              <ProtectedRoute>
+                <MainLayout>
+                  <MyList />
+                </MainLayout>
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/pricing"
+            element={
+              <ProtectedRoute>
+                <MainLayout>
+                  <Pricing />
+                </MainLayout>
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/profile"
+            element={
+              <ProtectedRoute>
+                <MainLayout>
+                  <Profile />
+                </MainLayout>
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/account"
+            element={
+              <ProtectedRoute>
+                <MainLayout>
+                  <Account />
+                </MainLayout>
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/contact"
+            element={
+              <ProtectedRoute>
+                <MainLayout>
+                  <Contact />
+                </MainLayout>
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/notifications"
+            element={
+              <ProtectedRoute>
+                <MainLayout>
+                  <Notifications />
+                </MainLayout>
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/privacy"
+            element={
+              <ProtectedRoute>
+                <MainLayout>
+                  <Privacy />
+                </MainLayout>
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/faq"
+            element={
+              <ProtectedRoute>
+                <MainLayout>
+                  <FAQ />
+                </MainLayout>
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/category"
+            element={
+              <ProtectedRoute>
+                <MainLayout>
+                  <CategoryList />
+                </MainLayout>
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/category/:categoryName"
+            element={
+              <ProtectedRoute>
+                <MainLayout>
+                  <Categories />
+                </MainLayout>
+              </ProtectedRoute>
+            }
+          />
+        </Routes>
+      </Router>
+    </AuthProvider>
   );
 }
 

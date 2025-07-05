@@ -2,12 +2,14 @@ import React, { useState, useEffect, useRef } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import "./header.css";
 import apiService from "../../services/api";
+import { useAuth } from "../../contexts/AuthContext";
 
 export const Header = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const searchInputRef = useRef(null);
   const notificationRef = useRef(null);
+  const { logout } = useAuth();
 
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
@@ -343,6 +345,12 @@ export const Header = () => {
     }
   };
 
+  // Handle logout
+  const handleLogout = () => {
+    logout();
+    navigate("/login");
+  };
+
   return (
     <header className={scrolled ? "header scrolled" : "header"}>
       <div className="header-container">
@@ -579,9 +587,9 @@ export const Header = () => {
                     </div>
                   </div>
                 )}
-                <Link to="/logout">
+                <button onClick={handleLogout}>
                   <i className="fas fa-sign-out-alt"></i>Sign Out
-                </Link>
+                </button>
               </div>
             </div>
           </div>

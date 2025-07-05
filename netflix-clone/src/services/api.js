@@ -1,8 +1,6 @@
 // src/services/api.js
 
-const PRIMARY_API_URL = `https://backend-fast-s1z9.onrender.com/api/v1`;
-const FALLBACK_API_URL = `http://localhost:8000/api/v1`;
-let API_BASE_URL = PRIMARY_API_URL;
+const API_BASE_URL = `https://backend-fast-s1z9.onrender.com/api/v1`;
 
 // Mock watchlist data for fallback when backend is not running
 let mockWatchlist = JSON.parse(localStorage.getItem('mockWatchlist') || '[]');
@@ -76,45 +74,6 @@ const request = async (
     return jsonData;
   } catch (error) {
     console.error(`API call failed: ${method} ${endpoint}`, error);
-    
-    // If primary API fails, try fallback
-    if (API_BASE_URL === PRIMARY_API_URL) {
-      console.warn(`Primary API failed, trying fallback: ${error.message}`);
-      API_BASE_URL = FALLBACK_API_URL;
-      
-      try {
-        const fallbackUrl = `${API_BASE_URL}${endpoint}`;
-        console.log('Making fallback request to:', fallbackUrl);
-        
-        const fallbackResponse = await fetch(fallbackUrl, config);
-        console.log('Fallback response status:', fallbackResponse.status);
-        
-        if (!fallbackResponse.ok) {
-          const fallbackErrorData = await fallbackResponse
-            .json()
-            .catch(() => ({ detail: fallbackResponse.statusText }));
-          const fallbackError = new Error(
-            fallbackErrorData.detail || `HTTP error! status: ${fallbackResponse.status}`
-          );
-          fallbackError.status = fallbackResponse.status;
-          fallbackError.data = fallbackErrorData;
-          throw fallbackError;
-        }
-
-        if (fallbackResponse.status === 204) {
-          return null;
-        }
-
-        const fallbackJsonData = await fallbackResponse.json();
-        console.log('Fallback Response JSON:', fallbackJsonData);
-        return fallbackJsonData;
-      } catch (fallbackError) {
-        console.error('Fallback API also failed:', fallbackError);
-        API_BASE_URL = PRIMARY_API_URL; // Reset for next request
-        throw fallbackError;
-      }
-    }
-    
     throw error; // Hataları tekrar fırlat ki component'ler yakalayabilsin
   }
 };
@@ -142,38 +101,6 @@ const apiService = {
     console.log('Login response status:', response.status);
     
     if (!response.ok) {
-      // Try fallback for login if primary fails
-      if (API_BASE_URL === PRIMARY_API_URL) {
-        console.warn('Primary login API failed, trying fallback...');
-        API_BASE_URL = FALLBACK_API_URL;
-        
-        try {
-          const fallbackUrl = `${API_BASE_URL}/auth/login`;
-          console.log('Making fallback login request to:', fallbackUrl);
-          
-          const fallbackResponse = await fetch(fallbackUrl, config);
-          console.log('Fallback login response status:', fallbackResponse.status);
-          
-          if (!fallbackResponse.ok) {
-            const fallbackErrorData = await fallbackResponse.json().catch(() => ({ detail: fallbackResponse.statusText }));
-            console.log('Fallback login error response data:', fallbackErrorData);
-            const fallbackError = new Error(fallbackErrorData.detail || `HTTP error! status: ${fallbackResponse.status}`);
-            fallbackError.status = fallbackResponse.status;
-            fallbackError.data = fallbackErrorData;
-            API_BASE_URL = PRIMARY_API_URL; // Reset for next request
-            throw fallbackError;
-          }
-          
-          const fallbackJsonData = await fallbackResponse.json();
-          console.log('✅ Fallback login API response:', fallbackJsonData);
-          return { data: { token: fallbackJsonData.access_token, token_type: fallbackJsonData.token_type } };
-        } catch (fallbackError) {
-          console.error('Fallback login API also failed:', fallbackError);
-          API_BASE_URL = PRIMARY_API_URL; // Reset for next request
-          throw fallbackError;
-        }
-      }
-      
       const errorData = await response.json().catch(() => ({ detail: response.statusText }));
       console.log('Login error response data:', errorData);
       const error = new Error(errorData.detail || `HTTP error! status: ${response.status}`);

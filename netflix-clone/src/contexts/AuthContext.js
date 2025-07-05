@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
+import apiService from '../services/api';
 
 const AuthContext = createContext();
 
@@ -18,7 +19,9 @@ export const AuthProvider = ({ children }) => {
   useEffect(() => {
     // Check if user is logged in from localStorage
     const storedUser = localStorage.getItem('user');
-    if (storedUser) {
+    const storedToken = localStorage.getItem('authToken');
+    
+    if (storedUser && storedToken) {
       try {
         const userData = JSON.parse(storedUser);
         setUser(userData);
@@ -26,6 +29,7 @@ export const AuthProvider = ({ children }) => {
       } catch (error) {
         console.error('Error parsing stored user data:', error);
         localStorage.removeItem('user');
+        localStorage.removeItem('authToken');
       }
     }
     setLoading(false);
@@ -34,22 +38,32 @@ export const AuthProvider = ({ children }) => {
   const login = async (credentials) => {
     try {
       setLoading(true);
-      // Simulate API call
-      const userData = {
-        id: 1,
-        email: credentials.email,
-        name: credentials.email.split('@')[0],
-        avatar: '/images/default-avatar.png'
-      };
+      // Call real backend API
+      const response = await apiService.login(credentials);
       
-      setUser(userData);
-      setIsAuthenticated(true);
-      localStorage.setItem('user', JSON.stringify(userData));
-      
-      return { success: true, user: userData };
+      if (response.data && response.data.token) {
+        // Store token
+        localStorage.setItem('authToken', response.data.token);
+        
+        // Create user object
+        const userData = {
+          id: Date.now(),
+          email: credentials.email,
+          name: credentials.email.split('@')[0],
+          avatar: '/images/default-avatar.png'
+        };
+        
+        setUser(userData);
+        setIsAuthenticated(true);
+        localStorage.setItem('user', JSON.stringify(userData));
+        
+        return { success: true, user: userData };
+      } else {
+        return { success: false, error: 'Invalid response from server' };
+      }
     } catch (error) {
       console.error('Login error:', error);
-      return { success: false, error: error.message };
+      return { success: false, error: error.message || 'Login failed' };
     } finally {
       setLoading(false);
     }
@@ -58,22 +72,40 @@ export const AuthProvider = ({ children }) => {
   const register = async (userData) => {
     try {
       setLoading(true);
-      // Simulate API call
-      const newUser = {
-        id: Date.now(),
-        email: userData.email,
-        name: userData.name || userData.email.split('@')[0],
-        avatar: '/images/default-avatar.png'
-      };
+      // Call real backend API
+      const response = await apiService.register(userData);
       
-      setUser(newUser);
-      setIsAuthenticated(true);
-      localStorage.setItem('user', JSON.stringify(newUser));
+      if (response && response.id) {
+        // Auto-login after successful registration
+        const loginResponse = await apiService.login({
+          email: userData.email,
+          password: userData.password
+        });
+        
+        if (loginResponse.data && loginResponse.data.token) {
+          // Store token
+          localStorage.setItem('authToken', loginResponse.data.token);
+          
+          // Create user object
+          const newUser = {
+            id: response.id,
+            email: userData.email,
+            name: userData.name || userData.email.split('@')[0],
+            avatar: '/images/default-avatar.png'
+          };
+          
+          setUser(newUser);
+          setIsAuthenticated(true);
+          localStorage.setItem('user', JSON.stringify(newUser));
+          
+          return { success: true, user: newUser };
+        }
+      }
       
-      return { success: true, user: newUser };
+      return { success: false, error: 'Registration failed' };
     } catch (error) {
       console.error('Registration error:', error);
-      return { success: false, error: error.message };
+      return { success: false, error: error.message || 'Registration failed' };
     } finally {
       setLoading(false);
     }
@@ -83,6 +115,7 @@ export const AuthProvider = ({ children }) => {
     setUser(null);
     setIsAuthenticated(false);
     localStorage.removeItem('user');
+    localStorage.removeItem('authToken');
   };
 
   const updateProfile = async (profileData) => {
